@@ -1,29 +1,32 @@
 <template>
-  <div class="is-flex is-align-items-center is-justify-content-space-between">
+  <section class="is-flex is-align-items-center is-justify-content-space-between">
     <StopWatch :timeInSeconds="timeInSeconds" />
-    <button class="button" @click="startTimer" :disabled="isStopwatchRunning">
-      <span class="icon">
-        <i class="fas fa-play"></i>
-      </span>
-      <span>play</span>
-    </button>
-    <button class="button" @click="stopTimer" :disabled="!isStopwatchRunning">
-      <span class="icon">
-        <i class="fas fa-stop"></i>
-      </span>
-      <span>stop</span>
-    </button>
-  </div>
+    <TaskButton
+      :disabled="isStopwatchRunning"
+      icon="fas fa-play"
+      text="Start"
+      @clicked="startTimer"
+    />
+    <TaskButton
+      :disabled="!isStopwatchRunning"
+      icon="fas fa-play"
+      text="Stop"
+      @clicked="stopTimer"
+    />
+  </section>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import StopWatch from "./StopWatch.vue";
+import TaskButton from "./TaskButton.vue";
 
 export default defineComponent({
   name: "TimerTask",
+  emits: ["whenTimerStops"],
   components: {
     StopWatch,
+    TaskButton
   },
   data() {
     return {
@@ -42,6 +45,8 @@ export default defineComponent({
     stopTimer() {
       this.isStopwatchRunning = false;
       clearInterval(this.stopwatch);
+      this.$emit('whenTimerStops', this.timeInSeconds);
+      this.timeInSeconds = 0;
     },
   },
 });
