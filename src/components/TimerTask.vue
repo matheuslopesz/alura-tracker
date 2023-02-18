@@ -1,13 +1,13 @@
 <template>
   <div class="is-flex is-align-items-center is-justify-content-space-between">
     <StopWatch :timeInSeconds="timeInSeconds" />
-    <button class="button" @click="startTimer">
+    <button class="button" @click="startTimer" :disabled="isStopwatchRunning">
       <span class="icon">
         <i class="fas fa-play"></i>
       </span>
       <span>play</span>
     </button>
-    <button class="button" @click="stopTimer">
+    <button class="button" @click="stopTimer" :disabled="!isStopwatchRunning">
       <span class="icon">
         <i class="fas fa-stop"></i>
       </span>
@@ -29,15 +29,18 @@ export default defineComponent({
     return {
       timeInSeconds: 0,
       stopwatch: 0,
+      isStopwatchRunning: false,
     };
   },
   methods: {
     startTimer() {
+      this.isStopwatchRunning = true;
       this.stopwatch = setInterval(() => {
         this.timeInSeconds++;
       }, 1000);
     },
     stopTimer() {
+      this.isStopwatchRunning = false;
       clearInterval(this.stopwatch);
     },
   },
