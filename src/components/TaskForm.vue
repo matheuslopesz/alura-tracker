@@ -8,9 +8,7 @@
         <div
           class="is-flex is-align-items-center is-justify-content-space-between"
         >
-          <section>
-            <strong>{{ spentTime }}</strong>
-          </section>
+        <StopWatch :timeInSeconds="timeInSeconds" />
           <button class="button" @click="startTimer">
             <span class="icon">
               <i class="fas fa-play"></i>
@@ -31,27 +29,27 @@
 
 <script>
 import { defineComponent } from "vue";
+import StopWatch from "./StopWatch.vue";
 
 export default defineComponent({
   name: "TaskForm",
+  components: {
+    StopWatch,
+  },
   data() {
     return {
-      timeInSeconds: 0
-    }
-  },
-  computed: {
-    spentTime() {
-      return new Date(this.timeInSeconds * 1000).toISOString().substr(11, 8);
-    }
+      timeInSeconds: 0,
+      stopwatch: 0,
+    };
   },
   methods: {
     startTimer() {
-      setInterval(() => {
+      this.stopwatch = setInterval(() => {
         this.timeInSeconds++;
       }, 1000);
     },
     stopTimer() {
-      console.log("stop timer");
+      clearInterval(this.stopwatch);
     },
   },
 });
