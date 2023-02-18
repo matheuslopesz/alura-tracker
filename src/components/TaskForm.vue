@@ -22,6 +22,7 @@ import TimerTask from "./TimerTask.vue";
 
 export default defineComponent({
   name: "TaskForm",
+  emits: ['whenSavingTask'],
   components: {
     TimerTask,
   },
@@ -32,8 +33,10 @@ export default defineComponent({
   },
   methods: {
     finishTask(timeInSeconds) {
-      console.log(timeInSeconds);
-      console.log(this.taskName);
+      this.$emit('whenSavingTask', {
+        name: this.taskName,
+        timeInSeconds,
+      });
       this.description = '';
     },
   },
