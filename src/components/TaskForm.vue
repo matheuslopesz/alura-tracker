@@ -11,13 +11,13 @@
           <section>
             <strong>00:00:00</strong>
           </section>
-          <button class="button">
+          <button class="button" @click="startTimer">
             <span class="icon">
               <i class="fas fa-play"></i>
             </span>
             <span>play</span>
           </button>
-          <button class="button">
+          <button class="button" @click="stopTimer">
             <span class="icon">
               <i class="fas fa-stop"></i>
             </span>
@@ -29,9 +29,25 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
+
 export default defineComponent({
   name: "TaskForm",
+  data() {
+    return {
+      timeInSeconds: 0
+    }
+  },
+  methods: {
+    startTimer() {
+      setInterval(() => {
+        this.timeInSeconds++;
+      }, 1000);
+    },
+    stopTimer() {
+      console.log("stop timer");
+    },
+  },
 });
 </script>
