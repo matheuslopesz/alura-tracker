@@ -9,7 +9,7 @@
           class="is-flex is-align-items-center is-justify-content-space-between"
         >
           <section>
-            <strong>00:00:00</strong>
+            <strong>{{ spentTime }}</strong>
           </section>
           <button class="button" @click="startTimer">
             <span class="icon">
@@ -37,6 +37,11 @@ export default defineComponent({
   data() {
     return {
       timeInSeconds: 0
+    }
+  },
+  computed: {
+    spentTime() {
+      return new Date(this.timeInSeconds * 1000).toISOString().substr(11, 8);
     }
   },
   methods: {
